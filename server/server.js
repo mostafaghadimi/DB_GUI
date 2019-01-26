@@ -8,6 +8,8 @@ app.use(bodyParser.json())
 
 var pg = require('pg')
 
+// TODO: setup connection and query to database in the requests => Mehrdad
+
 app.use('/public', express.static(path.join(__dirname, '../public/')))
 const PORT = 8080
 
