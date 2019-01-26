@@ -128,14 +128,38 @@ function getProductRes(ls, st) {
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/seller', (req, res) => {
-    res.send(req.query.seller)
-})
+   pool.connect(function (err, client, done) {
+	   if (err) {
+		   console.log("Can not connect to the DB" + err);
+	   }
+	   client.query('select name, address, description, validated from seller where address like \'%' + req.query.seller + '%\' or name = \'%' + req.query.seller + '%\'', function (err, result) {
+			done();
+			if (err) {
+				console.log("error1", err);
+				res.status(400).send(err);
+			}
+			res.status(200).send(result.rows);
+	   })
+   })
+});
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 app.get('/user', (req, res) => {
-    res.send(req.query.user)
-})
+   pool.connect(function (err, client, done) {
+	   if (err) {
+		   console.log("Can not connect to the DB" + err);
+	   }
+	   client.query('select * from customer where email = \'' + req.query.user + '\' and password = \'' + req.query.pass + '\'', function (err, result) {
+			done();
+			if (err) {
+				console.log("error1", err);
+				res.status(400).send(err);
+			}
+			res.status(200).send(result.rows);
+	   })
+   })
+});
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
