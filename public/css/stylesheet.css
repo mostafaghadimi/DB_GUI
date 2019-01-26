@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Calibri Light'
+    font-family: 'Calibri Light';
+    outline: 0;
+    text-decoration: none;
 }
 
 body {
@@ -23,7 +25,6 @@ body {
     direction: rtl;
     height: 150px;
     background-color: rgb(245, 245, 245);
-    text-align: center;
     font-size: 30px;
     display: flex;
     justify-content: center;
@@ -32,7 +33,7 @@ body {
 }
 
 .members {
-    background-color: rgb(197, 229, 255);
+    background-color: rgb(201, 201, 201);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
@@ -40,19 +41,47 @@ body {
 
 .members > div {
     text-align: center;
+    direction: rtl;
 }
 
 .member {
     padding: 10px;
 }
 
+
 .member:hover {
     color: white;
     transition-duration: .7s;
-    background-color: rgb(7, 0, 73);
+    background-color: rgb(109, 109, 109);
 
 }
 
 .member:not(:hover) {
     transition-duration: .7s;
+}
+
+.databases {
+    direction: rtl;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: calc(100% - 200px)
+}
+
+.product, .seller, .user {
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 17px;
+
+}
+
+.product, .seller {
+    border-left: 1px solid rgba(227,227,227,1);
+}
+
+.databases > div > i {
+    font-size: 90px;
 }

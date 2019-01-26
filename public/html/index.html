@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>پروژه پایگاه‌داده</title>
     <link rel="stylesheet" href="/public/css/stylesheet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
 </head>
+
 <body>
     <div class="main">
         <div class="header">
@@ -17,6 +21,33 @@
             <div class="member">مصطفی قدیمی</div>
             <div class="member">امیرحسن فتحی</div>
         </div>
+        <div class="databases">
+            <div class="product">
+                <i class="fas fa-shopping-cart"></i>
+                <br>
+                <form action="/product">
+                    <input type="text" name="product" placeholder="نام محصول را وارد کنید">
+                    <button type="submit">جستجو</button>
+                </form>
+            </div>
+            <div class="seller">
+                <i class="fas fa-building"></i>
+                <br>
+                <form action="/seller">
+                    <input type="text" name="seller" placeholder="نام فروشنده را وارد کنید">
+                    <button type="submit">جستجو</button>
+                </form>
+            </div>
+            <div class="user">
+                <i class="fas fa-user"></i>
+                <br>
+                <form action="/user">
+                    <input type="text" name="user" placeholder="نام کاربر را وارد کنید">
+                    <button type="submit">جستجو</button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>
