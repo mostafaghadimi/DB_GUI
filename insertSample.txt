@@ -1,0 +1,8 @@
+-- insert into category (name) values ('electronic');
+-- insert into category (parent_id, name) values ((select id from category where name = 'electronic'), 'phone');
+-- insert into product (sell_count, name, category_id, review) values (0, 'myphone', (select id from category where name = 'phone'), 'is_bad!');
+-- insert into general_feature values ('height', '12cm', (select id from product where name = 'myphone'));
+-- insert into general_feature values ('width', '8cm', (select id from product where name = 'myphone'));
+-- insert into product (sell_count, name, category_id, review) values (0, 'iphone', (select id from category where name = 'phone'), 'is_good!');
+-- insert into general_feature values ('height', '10cm', (select id from product where name = 'iphone'));
+-- insert into general_feature values ('width', '6cm', (select id from product where name = 'iphone'));

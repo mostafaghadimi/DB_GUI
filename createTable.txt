@@ -1,0 +1,266 @@
+CREATE DOMAIN MELLICODE VARCHAR(10) CHECK(VALUE ~ '^[0-9]{2}[1-9]{8}$');
+
+CREATE DOMAIN EMAIL VARCHAR(254) CHECK (VALUE ~ '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
+
+CREATE DOMAIN MOBILE VARCHAR(11) CHECK (VALUE ~ '^09[0-9]{9}$');
+
+CREATE DOMAIN PHONE VARCHAR(11) CHECK (VALUE ~ '^0[0-9]{10}$');
+
+CREATE DOMAIN CARDNUM VARCHAR(20) CHECK (VALUE ~ '^[0-9]{16}$' OR VALUE ~ '^[0-9]{20}$');
+
+CREATE DOMAIN SCORE DEC(5,1) DEFAULT 0 CHECK (VALUE >= 0 AND VALUE <= 5);
+
+
+
+CREATE TABLE Employee (
+melli_code MELLICODE UNIQUE,
+enumber SERIAL PRIMARY KEY,
+email EMAIL UNIQUE,
+salary INT,
+mobile_phone MOBILE UNIQUE,
+card_number CARDNUM,
+first_name VARCHAR(20),
+last_name VARCHAR(20)
+);
+CREATE TABLE Manager (
+history INT,
+position VARCHAR(20),
+enumber INT PRIMARY KEY,
+FOREIGN KEY (enumber) REFERENCES Employee(enumber)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Backup_employee (
+enumber INT PRIMARY KEY,
+score SCORE,
+scorers_num INT,
+FOREIGN KEY (enumber) REFERENCES Employee(enumber)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Eval_seller_employee (
+enumber INT PRIMARY KEY,
+id_code INT UNIQUE,
+FOREIGN KEY (enumber) REFERENCES Employee(enumber)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Seller (
+id SERIAL PRIMARY KEY,
+address TEXT,
+description TEXT,
+validated BOOLEAN DEFAULT false,
+name VARCHAR(20),
+eval_enumber INT,
+FOREIGN KEY (eval_enumber) REFERENCES Eval_seller_employee(enumber)
+On delete set null
+On update cascade
+);
+CREATE TABLE Customer (
+balance INT,
+password CHAR(128),
+email EMAIL PRIMARY KEY,
+melli_code MELLICODE UNIQUE,
+first_name VARCHAR(20),
+last_name VARCHAR(20),
+validated BOOLEAN DEFAULT false,
+mobile_phone MOBILE UNIQUE,
+card_number CARDNUM
+);
+CREATE TABLE Transaction_table (
+tracking_number SERIAL PRIMARY KEY,
+date TIMESTAMP DEFAULT NOW(),
+bill TEXT,
+customer_email EMAIL,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE Backup_job (
+id SERIAL PRIMARY KEY,
+ticket TEXT,
+is_done BOOLEAN DEFAULT false,
+backup_enumber INT,
+transaction_id INT,
+customer_email EMAIL,
+FOREIGN KEY (backup_enumber) REFERENCES Backup_employee(enumber)
+On delete set null
+On update cascade,
+FOREIGN KEY (transaction_id) REFERENCES Transaction_table(tracking_number)
+On delete set null
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE back_up_score (
+id SERIAL PRIMARY KEY,
+customer_email EMAIL,
+backup_enumber INT,
+score INT,
+FOREIGN KEY (backup_enumber) REFERENCES Backup_employee(enumber)
+On delete set null
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE Address (
+id SERIAL PRIMARY KEY,
+ostan VARCHAR(20),
+shahr VARCHAR(20),
+postal_code VARCHAR(10),
+location POINT,
+postal_address TEXT,
+phone PHONE
+);
+CREATE TABLE Address_customer (
+address_id INT,
+customer_email EMAIL,
+PRIMARY KEY (address_id, customer_email),
+FOREIGN KEY (address_id) REFERENCES Address(id)
+On delete cascade
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE Discount (
+code VARCHAR(20) PRIMARY KEY,
+remaining_uses INT
+);
+CREATE TABLE Cart (
+id SERIAL PRIMARY KEY,
+payment_status VARCHAR(20),
+customer_email EMAIL,
+discount_code VARCHAR(20),
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete cascade
+On update cascade,
+FOREIGN KEY (discount_code) REFERENCES Discount(code)
+On delete set null
+On update cascade
+);
+CREATE TABLE Dispatch (
+tracking_number SERIAL PRIMARY KEY,
+date TIMESTAMP DEFAULT NOW(),
+getter_phone PHONE NOT NULL,
+getter_name VARCHAR(40) NOT NULL,
+post_type VARCHAR(20),
+address_id INT,
+cart_id INT,
+FOREIGN KEY (address_id) REFERENCES Address(id)
+On delete set null
+On update cascade,
+FOREIGN KEY (cart_id) REFERENCES Cart(id)
+On delete set null
+On update cascade
+);
+CREATE TABLE Category (
+id SERIAL PRIMARY KEY,
+parent_id INT,
+name VARCHAR(20),
+FOREIGN KEY (parent_id) REFERENCES Category(id)
+On delete set null
+On update cascade
+);
+CREATE TABLE Product (
+id SERIAL PRIMARY KEY,
+sell_count INT,
+name VARCHAR(100),
+category_id INT,
+review TEXT,
+FOREIGN KEY (category_id) REFERENCES Category(id)
+On delete set null
+On update cascade
+);
+CREATE TABLE Product_image (
+id SERIAL PRIMARY KEY,
+image_url TEXT NOT NULL,
+product_id INT,
+FOREIGN KEY (product_id) REFERENCES Product(id)
+On delete cascade
+On update cascade
+);
+CREATE TABLE General_feature (
+name VARCHAR(20),
+value VARCHAR(20),
+product_id INT,
+PRIMARY KEY (name, value, product_id),
+FOREIGN KEY (product_id) REFERENCES Product(id)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Product_score (
+product_id INT,
+customer_email EMAIL,
+score SCORE,
+PRIMARY KEY (product_id, customer_email),
+FOREIGN KEY (product_id) REFERENCES Product(id)
+On delete set null
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE Special_product (
+id SERIAL PRIMARY KEY,
+inventory INT,
+price INT,
+product_id INT,
+seller_id INT,
+FOREIGN KEY (product_id) REFERENCES Product(id)
+On delete cascade
+On update cascade,
+FOREIGN KEY (seller_id) REFERENCES Seller(id)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Special_feature (
+name VARCHAR(20),
+value VARCHAR(20),
+special_product_id INT,
+PRIMARY KEY (name, value, special_product_id),
+FOREIGN KEY (special_product_id) REFERENCES Special_product(id)
+On delete cascade
+On update cascade
+);
+CREATE TABLE Cart_product (
+cart_id INT,
+special_product_id INT,
+FOREIGN KEY (cart_id) REFERENCES Cart(id)
+On delete set null
+On update cascade,
+FOREIGN KEY (special_product_id) REFERENCES Special_product(id)
+On delete set null
+On update cascade
+);
+CREATE TABLE Seller_score (
+seller_id INT,
+customer_email EMAIL,
+score SCORE,
+PRIMARY KEY (seller_id, customer_email),
+FOREIGN KEY (seller_id) REFERENCES Seller(id)
+On delete set null
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade
+);
+CREATE TABLE Comment (
+id SERIAL PRIMARY KEY,
+content TEXT,
+seller_id INT,
+customer_email EMAIL,
+product_id INT,
+FOREIGN KEY (seller_id) REFERENCES Seller(id)
+On delete set null
+On update cascade,
+FOREIGN KEY (customer_email) REFERENCES Customer(email)
+On delete set null
+On update cascade,
+FOREIGN KEY (product_id) REFERENCES Product(id)
+On delete set null
+On update cascade
+);
+
