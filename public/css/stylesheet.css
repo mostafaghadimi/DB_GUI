@@ -80,6 +80,7 @@ body {
     height: calc(100% - 200px)
 }
 
+
 .product,
 .seller,
 .user {
@@ -137,17 +138,8 @@ input:not(:hover) {
     transition-duration: .5s;
 }
 
-.databases > form {
-    padding: 10px;
-    text-align: center;
-    display: block;
-    width: 1025px;
-    height: 100%;
-    align-content: center;
-    margin: auto;
-}
 
-.databases > form > table {
+.databases>form>table {
     margin: auto;
 }
 
@@ -171,4 +163,16 @@ table tr:hover {
     background-color: rgb(0, 106, 255);
     transition-duration: .5s;
     color: white;
+}
+
+
+.results {
+    height: auto;
+    direction: rtl;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+    display: block;
+    align-content: center;
+    margin: auto;
 }

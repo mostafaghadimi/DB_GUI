@@ -17,7 +17,7 @@
                 <div class="member">مصطفی قدیمی</div>
                 <div class="member">امیرحسن فتحی</div>
             </div>
-            <div class="databases">
+            <div class="results">
                 <% if (query.length == 0) { %>
                     <div style="padding: 10px;">
                         متاسفانه برای عبارت "<%= search %>" نتیجه‌ای وجود ندارد
@@ -28,7 +28,10 @@
                             <table dir="rtl" cellspacing=0>
                                 <% for (var i = 0; i < query.length; i++) { %> 
                                     <% if (query[i].name == search) { %>
-                    
+                                    <tr>
+                                        <td>شماره</td>
+                                        <td><%= i + 1 %></td>
+                                    </tr>
                                     <tr>
                                         <td>نام محصول</td>
                                         <td><%= query[i].name %></td>
