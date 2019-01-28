@@ -2,7 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Calibri Light';
+    font-family: 'B Yekan', 'Calibri Light';
+    font-size: 14px;
     outline: 0;
     text-decoration: none;
 }
@@ -16,9 +17,9 @@ body {
     height: 100vh;
     margin: auto;
     background-color: #fff;
-    -webkit-box-shadow: 0px 0px 79px -6px rgba(0,0,0,0.11);
-    -moz-box-shadow: 0px 0px 79px -6px rgba(0,0,0,0.11);
-    box-shadow: 0px 0px 79px -6px rgba(0,0,0,0.11);
+    -webkit-box-shadow: 0px 0px 79px -6px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 0px 0px 79px -6px rgba(0, 0, 0, 0.11);
+    box-shadow: 0px 0px 79px -6px rgba(0, 0, 0, 0.11);
 }
 
 .header {
@@ -36,10 +37,9 @@ body {
     background-color: rgb(201, 201, 201);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
 }
 
-.members > div {
+.members>div {
     text-align: center;
     direction: rtl;
 }
@@ -48,16 +48,29 @@ body {
     padding: 10px;
 }
 
-
 .member:hover {
     color: white;
     transition-duration: .7s;
     background-color: rgb(109, 109, 109);
+}
 
+.member:hover:nth-child(1)::after {
+    content: ' (95105838)';
+    white-space: pre
+}
+
+.member:hover:nth-child(2)::after {
+    content: ' (95105787)';
+    white-space: pre
+}
+
+.member:hover:nth-child(3)::after {
+    content: ' (95105754)';
+    white-space: pre
 }
 
 .member:not(:hover) {
-    transition-duration: .7s;
+    transition-duration: .5s;
 }
 
 .databases {
@@ -67,7 +80,9 @@ body {
     height: calc(100% - 200px)
 }
 
-.product, .seller, .user {
+.product,
+.seller,
+.user {
     background-color: rgb(255, 255, 255);
     padding: 10px;
     display: flex;
@@ -78,10 +93,46 @@ body {
 
 }
 
-.product, .seller {
-    border-left: 1px solid rgba(227,227,227,1);
+.product,
+.seller {
+    border-left: 1px solid rgba(227, 227, 227, 1);
 }
 
-.databases > div > i {
+.databases>div>i {
     font-size: 90px;
+}
+
+input,
+button {
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    text-align: center
+}
+
+input {
+    background-color: rgb(243, 243, 243);
+}
+
+input:hover {
+    background-color: rgb(221, 221, 221);
+    transition-duration: .5s;
+}
+
+button {
+    background-color: rgb(199, 222, 255);
+}
+
+button:hover {
+    background-color: rgb(0, 106, 255);
+    transition-duration: .5s;
+    color: white;
+}
+
+button:not(:hover),
+input:not(:hover) {
+    transition-duration: .5s;
 }
