@@ -136,3 +136,39 @@ button:not(:hover),
 input:not(:hover) {
     transition-duration: .5s;
 }
+
+.databases > form {
+    padding: 10px;
+    text-align: center;
+    display: block;
+    width: 1025px;
+    height: 100%;
+    align-content: center;
+    margin: auto;
+}
+
+.databases > form > table {
+    margin: auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table tr td {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid rgb(184, 184, 184);
+}
+
+table tr td:nth-child(odd) {
+    text-align: right;
+    background-color: rgb(199, 222, 255);
+    color: black;
+}
+
+table tr:hover {
+    background-color: rgb(0, 106, 255);
+    transition-duration: .5s;
+    color: white;
+}
