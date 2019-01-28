@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>نتایج جستجو در محصولات</title>
+</head>
+<body>
+    <h1>
+        <%= search %>
+    </h1>
+    <form>
+        <% var related = [] %>
+        <table dir="rtl">
+            <tr>
+                <td>نام محصول</td>
+                <td>حافظه اصلی</td>
+                <td>رنگ</td>
+                <td>طول</td>
+                <td>ارتفاع</td>
+                <td>قیمت</td>
+            </tr>
+            <% for (var i = 0; i < query.length; i++) { %> 
+            <tr>
+                <% if (query[i].name == search) { %>
+                <td><%= query[i].name %></td>
+                <td><%= query[i].features.ram %></td>
+                <td><%= query[i].features.color %></td>
+                <td><%= query[i].features.width %></td>
+                <td><%= query[i].features.height %></td>
+                <td><%= query[i].price %></td>
+                <% } else { %> 
+                    <% related.push(query[i]) %>
+                <% } %>
+            </tr>
+            <% } %>
+        </table>
+    </form>
+</body>
+</html>

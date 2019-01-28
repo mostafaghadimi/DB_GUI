@@ -6,12 +6,16 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(bodyParser.json())
 
+var ejs = require('ejs')
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../public/ejs'));
+
 const pg = require('pg');
 
 const config = {
     user: 'postgres',
-    database: 'market',
-    password: '1',
+    database: 'DB_GUI',
+    password: 'root',
     port: 5432
 };
 
@@ -39,7 +43,12 @@ app.get('/product', (req, res) => {
                 console.log("error1", err);
                 res.status(400).send(err);
             }
-            res.status(200).send(getProductRes(result.rows, req.query.product));
+			// res.status(200).send(getProductRes(result.rows, req.query.product));
+			queryResult = getProductRes(result.rows, req.query.product)
+			res.render('products', {
+				query: queryResult,
+				search: req.query.product
+			})
        })
    })
 });
