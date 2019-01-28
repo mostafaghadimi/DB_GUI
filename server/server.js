@@ -147,7 +147,10 @@ app.get('/seller', (req, res) => {
 				console.log("error1", err);
 				res.status(400).send(err);
 			}
-			res.status(200).send(result.rows);
+			res.render('seller', {
+				query: result.rows,
+				search: req.query.seller
+			});
 	   })
    })
 });
@@ -165,7 +168,10 @@ app.get('/user', (req, res) => {
 				console.log("error1", err);
 				res.status(400).send(err);
 			}
-			res.status(200).send(result.rows);
+			res.render('user', {
+				query: result.rows,
+				search: req.query.user
+			});
 	   })
    })
 });
